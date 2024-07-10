@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de Texto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Encriptador de Texto</h1>
+
+    <div class="contenedor">
+        <label for="texto">Ingrese texto:</label>
+        <input type="text" id="texto" placeholder="Escribe tu mensaje aquí">
+
+        <button onclick="encriptar()">Encriptar</button>
+        <button onclick="desencriptar()">Desencriptar</button>
+
+        <p id="resultado"></p>
+    </div>
+
+    <script>
+        function encriptar() {
+            const texto = document.getElementById('texto').value.toUpperCase();
+            const resultado = document.getElementById('resultado');
+
+            // Algoritmo de encriptación simple (sustitución de letras)
+            const clave = 'XYZABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
+            let textoCifrado = '';
+
+            for (let i = 0; i < texto.length; i++) {
+                const letra = texto[i];
+                const indiceLetra = clave.indexOf(letra);
+
+                if (indiceLetra !== -1) {
+                    textoCifrado += clave[(indiceLetra + 3) % clave.length];
+                } else {
+                    textoCifrado += letra;
+                }
+            }
+
+            resultado.textContent = textoCifrado;
+        }
+
+        function desencriptar() {
+            const textoCifrado = document.getElementById('texto').value.toUpperCase();
+            const resultado = document.getElementById('resultado');
+
+            // Algoritmo de desencriptación (inversión de la sustitución)
+            const clave = 'XYZABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
+            let textoPlano = '';
+
+            for (let i = 0; i < textoCifrado.length; i++) {
+                const letra = textoCifrado[i];
+                const indiceLetra = clave.indexOf(letra);
+
+                if (indiceLetra !== -1) {
+                    textoPlano += clave[(indiceLetra - 3 + clave.length) % clave.length];
+                } else {
+                    textoPlano += letra;
+                }
+            }
+
+            resultado.textContent = textoPlano;
+        }
+    </script>
+</body>
+</html>
